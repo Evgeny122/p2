@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'features',
     'debug_toolbar',
+    'pizza',
+    'order',
 ]
 
 MIDDLEWARE = [
