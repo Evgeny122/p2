@@ -17,9 +17,11 @@ import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include
 from features.views import index
+from order.views import create_order
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
+    path('createorder/', create_order, name='createorder'),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
