@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from pizza.models import PizzaModel
-from .forms import CreateForm
+from .forms import CreateForm, CreateOrderModelForm
 from .models import OrderModel
+from django.forms import modelformset_factory
 
 def create_order(request):
     all_pizzas = PizzaModel.objects.all()
@@ -16,9 +17,30 @@ def create_order(request):
         return redirect('createorder')        
     return render(request, 'order/create_order.html', {'all_pizzas' : all_pizzas, 'form' : order_form,})
 
-def create_model_order(request, *args, **kwarsg):
+def create_model_order(request, *args, **kwargs):
     pizzas = PizzaModel.objects.all()
+    model_form = CreateOrderModelForm(request.POST or None)
+    # OrderFormSet = modelformset_factory(
+    #     OrderModel, 
+    #     form = CreateOrderModelForm,
+    #     extra=2)
+    
+    # model_form = OrderFormSet(
+    #     request.POST or None,
+    #     queryset=OrderModel.objects.none(),
+    #     initial=[{
+    #         'address' : 'modelformset street'
+    #     }])
+    
+    # model_form = CreateOrderModelForm(request.POST or None)
+    # print(model_form.data)
+
+    # if model_form.is_valid():
+    #     model_form.save()
+    #     return redirect('createmodelorder')
+    
     context = {
-        'pizzas':pizzas
+        'pizzas' : pizzas,
+        'form' : model_form,
     }
     return render(request, 'order/create_model_order.html', context=context)
